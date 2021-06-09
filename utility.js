@@ -1,7 +1,7 @@
-// const { rejects } = require('assert');
-const fs = require('fs');
-// const { resolve } = require('path');
-function writeDataToFile(filename, content) {
+// const fs = require('fs');
+import fs from 'fs';
+
+export function writeDataToFile(filename, content) {
   fs.writeFileSync(filename, JSON.stringify(content), 'utf8', (err) => {
     if (err) {
       console.log(err);
@@ -9,7 +9,7 @@ function writeDataToFile(filename, content) {
   });
 }
 
-function getPostData(req) {
+export function getPostData(req) {
   return new Promise((resolve, reject) => {
     try {
       let body = '';
@@ -26,8 +26,3 @@ function getPostData(req) {
     }
   });
 }
-
-module.exports = {
-  writeDataToFile,
-  getPostData,
-};
