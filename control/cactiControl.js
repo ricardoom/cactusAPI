@@ -1,10 +1,13 @@
-const Cacti = require('../model/cactiModel');
-const { getPostData } = require('../utility');
+// const Cacti = require('../model/cactiModel');
+import { findAll, findCactusById, create, update, remove } from '../model/cactiModel.js';
+
+import { getPostData } from '../utility.js';
+
 // @desc Gets all Products
 // @route GET /api/cacti
-async function getCacti(req, res) {
+export async function getCacti(req, res) {
   try {
-    const cacti = await Cacti.findAll();
+    const cacti = await findAll();
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(cacti));
   } catch (error) {
@@ -14,9 +17,9 @@ async function getCacti(req, res) {
 
 // @desc Gets single cactus
 // @route GET /api/cacti/:id
-async function getCactus(req, res, id) {
+export async function getCactus(req, res, id) {
   try {
-    const cactus = await Cacti.findCactusById(id);
+    const cactus = await findCactusById(id);
     if (!cactus) {
       res.writeHead(404, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ message: 'these are not the cactus you are looking for' }));
@@ -31,7 +34,7 @@ async function getCactus(req, res, id) {
 
 // @desc Create a cactus
 // @route POST /api/cacti
-async function createCactus(req, res) {
+export async function createCactus(req, res) {
   try {
     const body = await getPostData(req);
     const { commonName, genus, subfamily, tribe, url } = JSON.parse(body);
@@ -43,7 +46,7 @@ async function createCactus(req, res) {
       url,
     };
 
-    const newCactus = await Cacti.create(cactus);
+    const newCactus = await create(cactus);
     res.writeHead(201, { 'Content-Type': 'application/json' });
     return res.end(JSON.stringify(newCactus));
   } catch (error) {
@@ -53,9 +56,9 @@ async function createCactus(req, res) {
 
 // @desc Update a cactus
 // @route PUT /api/cacti/:id
-async function updateCactus(req, res, id) {
+export async function updateCactus(req, res, id) {
   try {
-    const cactus = await Cacti.findCactusById(id);
+    const cactus = await findCactusById(id);
     if (!cactus) {
       res.writeHead(404, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ message: 'Cactus done not done found' }));
@@ -72,7 +75,7 @@ async function updateCactus(req, res, id) {
         url: url || cactus.url,
       };
 
-      const updatedCactus = await Cacti.update(id, cactusData);
+      const updatedCactus = await update(id, cactusData);
 
       res.writeHead(200, { 'Content-Type': 'application/json' });
       return res.end(JSON.stringify(updatedCactus));
@@ -84,14 +87,14 @@ async function updateCactus(req, res, id) {
 
 // @desc Delete a cactus
 // @route DELETe /api/cacti/:id
-async function deleteCactus(req, res, id) {
+export async function deleteCactus(req, res, id) {
   try {
-    const cactus = await Cacti.findCactusById(id);
+    const cactus = await findCactusById(id);
     if (!cactus) {
       res.writeHead(404, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ message: 'these are not the cactus you are looking for' }));
     } else {
-      await Cacti.remove(id);
+      await remove(id);
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ message: `Cactus: ${id} had done be deleted cabron!` }));
     }
@@ -99,10 +102,3 @@ async function deleteCactus(req, res, id) {
     console.log(error);
   }
 }
-module.exports = {
-  getCacti,
-  getCactus,
-  createCactus,
-  updateCactus,
-  deleteCactus,
-};
