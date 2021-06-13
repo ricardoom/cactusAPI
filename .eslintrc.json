@@ -1,6 +1,7 @@
 {
   "plugins": ["import"],
   "rules": {
+    "comma-dangle": ["error", { "objects": "only-multiline" }],
     "import/no-unresolved": 2,
     "import/no-commonjs": 2,
     "import/extensions": [2, "ignorePackages"]
