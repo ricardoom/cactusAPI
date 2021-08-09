@@ -1,5 +1,11 @@
 // const Cacti = require('../model/cactiModel');
-import { findAll, findCactusById, create, update, remove } from '../model/cactiModel.js';
+import {
+  findAll,
+  findCactusById,
+  create,
+  update,
+  remove,
+} from '../model/cactiModel.js';
 
 import { getPostData } from '../utility.js';
 
@@ -22,7 +28,11 @@ export async function getCactus(req, res, id) {
     const cactus = await findCactusById(id);
     if (!cactus) {
       res.writeHead(404, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: 'these are not the cactus you are looking for' }));
+      res.end(
+        JSON.stringify({
+          message: 'these are not the cactus you are looking for',
+        })
+      );
     } else {
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(cactus));
@@ -50,7 +60,8 @@ export async function createCactus(req, res) {
     res.writeHead(201, { 'Content-Type': 'application/json' });
     return res.end(JSON.stringify(newCactus));
   } catch (error) {
-    console.error("post function didn't work, done fucked up");
+    const errorMessage = 'Post Function done did not work... done dazzled';
+    console.error(errorMessage);
   }
 }
 
@@ -81,7 +92,7 @@ export async function updateCactus(req, res, id) {
       return res.end(JSON.stringify(updatedCactus));
     }
   } catch (error) {
-    console.error("update function didn't work. damn, thats fucked up");
+    console.error('update function did not work. damn, thats fucked up');
   }
 }
 
@@ -92,11 +103,17 @@ export async function deleteCactus(req, res, id) {
     const cactus = await findCactusById(id);
     if (!cactus) {
       res.writeHead(404, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: 'these are not the cactus you are looking for' }));
+      res.end(
+        JSON.stringify({
+          message: 'these are not the cactus you are looking for',
+        })
+      );
     } else {
       await remove(id);
       res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: `Cactus: ${id} had done be deleted cabron!` }));
+      res.end(
+        JSON.stringify({ message: `Cactus: ${id} had done be deleted cabron!` })
+      );
     }
   } catch (error) {
     console.log(error);

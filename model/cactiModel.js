@@ -1,13 +1,10 @@
 import cacti from '../data/cacti.json';
-// let cacti = require('../data/cacti.json');
-
-// const { v4: uuidv4 } = require('uuid');
 import { v4 as uuidv4 } from 'uuid';
-// const { writeDataToFile } = require('../utility.js');
 import { writeDataToFile } from '../utility.js';
 
 export function findAll() {
   return new Promise((resolve, reject) => {
+    console.log(cacti);
     resolve(cacti);
   });
 }
