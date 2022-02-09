@@ -28,7 +28,7 @@ const server = createServer((req, res) => {
     deleteCactus(req, res, id);
   } else {
     res.writeHead(404, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ message: "route don't done exist yo" })); //eslint-disable-line quotes
+    res.end(JSON.stringify({ message: 'route does not done exist yo' }));
   }
 });
 const PORT = process.env.PORT || 5000;

@@ -14,10 +14,12 @@ import { getPostData } from '../utility.js';
 export async function getCacti(req, res) {
   try {
     const cacti = await findAll();
+    // res.header('Access-Control-Allow-Origin', 'http://localhost:1234');
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(cacti));
+    console.log(req);
   } catch (error) {
-    console.error('done fucked up');
+    console.error('getCacti done fucked up');
   }
 }
 
@@ -27,6 +29,7 @@ export async function getCactus(req, res, id) {
   try {
     const cactus = await findCactusById(id);
     if (!cactus) {
+      // res.header('Access-Control-Allow-Origin', '*');
       res.writeHead(404, { 'Content-Type': 'application/json' });
       res.end(
         JSON.stringify({
@@ -34,11 +37,12 @@ export async function getCactus(req, res, id) {
         })
       );
     } else {
+      // res.header('Access-Control-Allow-Origin', '*');
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(cactus));
     }
   } catch (error) {
-    console.error('done fucked up');
+    console.error('getCactus (cactiControl) done fucked up', error);
   }
 }
 
@@ -57,10 +61,13 @@ export async function createCactus(req, res) {
     };
 
     const newCactus = await create(cactus);
+    // res.header('Access-Control-Allow-Origin', '*');
     res.writeHead(201, { 'Content-Type': 'application/json' });
+
     return res.end(JSON.stringify(newCactus));
   } catch (error) {
-    const errorMessage = 'Post Function done did not work... done dazzled';
+    const errorMessage =
+      'CreateCactus Post Function done did not work... done dazzled';
     console.error(errorMessage);
   }
 }
@@ -71,6 +78,7 @@ export async function updateCactus(req, res, id) {
   try {
     const cactus = await findCactusById(id);
     if (!cactus) {
+      res.header('Access-Control-Allow-Origin', '*');
       res.writeHead(404, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ message: 'Cactus done not done found' }));
     } else {
@@ -88,11 +96,13 @@ export async function updateCactus(req, res, id) {
 
       const updatedCactus = await update(id, cactusData);
 
+      res.header('Access-Control-Allow-Origin', '*');
       res.writeHead(200, { 'Content-Type': 'application/json' });
+
       return res.end(JSON.stringify(updatedCactus));
     }
   } catch (error) {
-    console.error('update function did not work. damn, thats fucked up');
+    console.error('updateCactus function did not work. damn, thats fucked up');
   }
 }
 
@@ -102,6 +112,7 @@ export async function deleteCactus(req, res, id) {
   try {
     const cactus = await findCactusById(id);
     if (!cactus) {
+      res.header('Access-Control-Allow-Origin', '*');
       res.writeHead(404, { 'Content-Type': 'application/json' });
       res.end(
         JSON.stringify({
@@ -110,6 +121,7 @@ export async function deleteCactus(req, res, id) {
       );
     } else {
       await remove(id);
+      res.header('Access-Control-Allow-Origin', '*');
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(
         JSON.stringify({ message: `Cactus: ${id} had done be deleted cabron!` })
@@ -119,3 +131,8 @@ export async function deleteCactus(req, res, id) {
     console.log(error);
   }
 }
+
+// export async function getLocation(req, res) {
+//   if (!cactus) {
+//   }
+// }

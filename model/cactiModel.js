@@ -1,10 +1,11 @@
 import cacti from '../data/cacti.json';
+
 import { v4 as uuidv4 } from 'uuid';
 import { writeDataToFile } from '../utility.js';
 
 export function findAll() {
   return new Promise((resolve, reject) => {
-    console.log(cacti);
+    // console.log(cacti);
     resolve(cacti);
   });
 }
